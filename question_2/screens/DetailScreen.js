@@ -2,26 +2,29 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, ScrollView, ActivityIndicator } from 'react-native';
 import styles from './DetailScreenStyles';
 
-const DetailScreen = ({ route }) => {
+function DetailScreen({ route }) {
   const { productId } = route.params;
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  useEffect(function() {
     fetchProduct();
   }, [productId]);
 
-  const fetchProduct = async () => {
-    try {
-      const response = await fetch(`https://fakestoreapi.com/products/${productId}`);
-      const data = await response.json();
-      setProduct(data);
-      setLoading(false);
-    } catch (err) {
-      console.error('Failed to fetch product details:', err);
-      setLoading(false);
-    }
-  };
+  function fetchProduct() {
+    fetch(`https://fakestoreapi.com/products/${productId}`)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        setProduct(data);
+        setLoading(false);
+      })
+      .catch(function(err) {
+        console.error('Failed to fetch product details:', err);
+        setLoading(false);
+      });
+  }
 
   if (loading) {
     return (
@@ -50,6 +53,6 @@ const DetailScreen = ({ route }) => {
       </View>
     </ScrollView>
   );
-};
+}
 
 export default DetailScreen;

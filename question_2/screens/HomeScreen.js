@@ -3,27 +3,30 @@ import { View, Text, FlatList, ActivityIndicator } from 'react-native';
 import ProductCard from '../components/ProductCard';
 import styles from './HomeScreenStyles';
 
-const HomeScreen = ({ navigation }) => {
+function HomeScreen({ navigation }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
+  useEffect(function() {
     fetchProducts();
   }, []);
 
-  const fetchProducts = async () => {
-    try {
-      const response = await fetch('https://fakestoreapi.com/products');
-      const data = await response.json();
-      setProducts(data);
-      setLoading(false);
-    } catch (err) {
-      setError('Failed to fetch products.');
-      setLoading(false);
-      console.error(err);
-    }
-  };
+  function fetchProducts() {
+    fetch('https://fakestoreapi.com/products')
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch(function(err) {
+        setError('Failed to fetch products.');
+        setLoading(false);
+        console.error(err);
+      });
+  }
 
   if (loading) {
     return (
@@ -41,21 +44,33 @@ const HomeScreen = ({ navigation }) => {
     );
   }
 
+  function renderProductItem({ item }) {
+    function handlePress() {
+      navigation.navigate('Detail', { productId: item.id });
+    }
+    
+    return (
+      <ProductCard 
+        product={item} 
+        onPress={handlePress}
+      />
+    );
+  }
+
+  function keyExtractor(item) {
+    return item.id.toString();
+  }
+
   return (
     <View style={styles.container}>
       <FlatList
         data={products}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <ProductCard 
-            product={item} 
-            onPress={() => navigation.navigate('Detail', { productId: item.id })}
-          />
-        )}
+        keyExtractor={keyExtractor}
+        renderItem={renderProductItem}
         contentContainerStyle={styles.list}
       />
     </View>
   );
-};
+}
 
 export default HomeScreen;

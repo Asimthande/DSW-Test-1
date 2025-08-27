@@ -6,15 +6,14 @@ import DetailScreen from './screens/DetailScreen';
 
 const Stack = createNativeStackNavigator();
 
-const App = () => {
-  
+function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen 
           name="Home" 
           component={HomeScreen}
-          options={{ title: 'DSW Store' }} 
+          options={{ title: 'FakeStore' }} 
         />
         <Stack.Screen 
           name="Detail" 
@@ -24,6 +23,6 @@ const App = () => {
       </Stack.Navigator>
     </NavigationContainer>
   );
-};
+}
 
 export default App;
