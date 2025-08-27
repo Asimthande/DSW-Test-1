@@ -1,0 +1,33 @@
+Component Hierarchy
+App: Navigation container, no state
+
+HomeScreen: Manages product list state, fetches data, passes products to ProductCards
+
+ProductCard: Receives product data via props, displays preview, triggers navigation
+
+DetailScreen: Receives product ID via navigation, manages detailed product state, fetches specific product data
+
+State Management
+HomeScreen holds: products array, loading status, error state
+
+DetailScreen holds: single product object, loading status, error state
+
+State flows downward via props from screens to display components
+
+Navigation parameters pass IDs between screens
+
+Data Flow
+HomeScreen fetches all products → stores in state → passes to ProductCards via props
+
+ProductCard press → navigates to DetailScreen with product ID parameter
+
+DetailScreen uses ID → fetches specific product details → stores in state → displays
+
+Key Principles
+Single source of truth for each data set
+
+Unidirectional data flow (parent to child via props)
+
+Separation of concerns (data management vs presentation)
+
+Minimal state needed in each component

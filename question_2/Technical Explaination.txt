@@ -1,0 +1,43 @@
+Navigation Setup
+Library: React Navigation with Stack Navigator
+
+Navigator Type: Native Stack Navigator for better performance
+
+Screens: Two main screens - HomeScreen and DetailScreen
+
+Screen Registration
+HomeScreen: Product listing page (initial route)
+
+DetailScreen: Product details page
+
+Navigation Flow
+App launches → HomeScreen displays product list
+
+User taps product → Navigation to DetailScreen with product ID parameter
+
+DetailScreen fetches & shows product details using passed ID
+
+User presses back → Returns to HomeScreen
+
+Technical Implementation
+--------------------------------------------------------------------------------------------------------------------------------
+// Navigation container setup
+<NavigationContainer>
+  <Stack.Navigator initialRouteName="Home">
+    <Stack.Screen name="Home" component={HomeScreen} />
+    <Stack.Screen name="Detail" component={DetailScreen} />
+  </Stack.Navigator>
+</NavigationContainer>
+Navigation Actions
+Forward navigation: navigation.navigate('Detail', {productId: id})
+
+Back navigation: Automatic back button handling
+--------------------------------------------------------------------------------------------------------------------------------
+Key Features
+Stack-based navigation (LIFO)
+
+Parameter passing between screens
+
+Header customization options
+
+Native transitions and gestures
